@@ -34,8 +34,8 @@ Requisitos previos:
    docker compose up --build
 (La primera vez tardará varios minutos por la instalación de dependencias)
 
-3. Abre tu navegador en:
-    http://localhost:5173
+3. Abre tu navegador en:\
+    http://localhost:5173 \
 ¡Aquí verás el dashboard completo con los datos actualizándose en tiempo real!
 
 4. (Opcional) Consultar la API manualmente:
@@ -46,24 +46,29 @@ Requisitos previos:
 Los servicios se comunican automáticamente:
 
 - El simulador envía datos al backend cada 0.5 segundos
-- El frontend se conecta por WebSocket al backend
+- El frontend se conecta por ***WebSocket*** al backend
+  
+Para detener el contenedor:
 
-Para detener:
+Presiona estas teclas para interrumpir (en la terminal donde está corriendo)\
+   Ctrl + C
 
-  Ctrl + C
-   
-o en otra terminal:
- 
-  docker compose down
+
+Una vez detenido, o desde otra terminal:
+
+
+docker compose down
+
+
 
 ## Cómo probar
 
-1. Ver que el simulador envía datos
-En los logs del contenedor simulator verás:
+1. Ver que el simulador envía datos \
+En los logs del contenedor simulator verás: \
 ✓ Datos enviados OK (status 201)
 
-2. Probar el endpoint manualmente (opcional con curl o Swagger)
-Desde tu máquina (mientras Docker está corriendo):
+2. Probar el endpoint manualmente (opcional con curl o Swagger) \
+Desde tu máquina (mientras Docker está corriendo): 
   ```powershell
   curl -X POST "http://localhost:8000/ingest" `
   -H "Content-Type: application/json" `
