@@ -1,0 +1,37 @@
+services:
+  api:
+    build:
+      context: .
+      target: python-app
+    command: uvicorn Backend:app --host 0.0.0.0 --port 8000 --reload
+    volumes:
+      - ./backend:/app
+    ports:
+      - "8000:8000"
+    environment:
+      - PYTHONUNBUFFERED=1
+
+  simulator:
+    build:
+      context: .
+      target: python-app
+    command: python /app/simulator/simulador.py
+    volumes:
+      - ./simulator:/app/simulator
+    depends_on:
+      - api
+    environment:
+      - PYTHONUNBUFFERED=1
+
+  frontend:
+    build:
+      context: ./frontend
+      dockerfile: ../Dockerfile.frontend
+    command: npm run dev -- --host 0.0.0.0
+    ports:
+      - "5173:5173"
+    volumes:
+      - ./frontend:/app
+      - /app/node_modules   # ← evita sobrescribir node_modules del contenedor
+    depends_on:
+      - api

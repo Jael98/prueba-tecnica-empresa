@@ -1,0 +1,21 @@
+FROM node:20-slim
+
+WORKDIR /app
+
+# Copiamos solo los archivos de dependencias primero
+COPY package.json package-lock.json* ./
+
+# Limpiamos cache y node_modules, instalamos global vite y luego dependencias
+RUN rm -rf node_modules && \
+    npm cache clean --force && \
+    npm install -g vite && \
+    npm install --legacy-peer-deps --no-audit --no-fund
+
+# Copiamos el resto del código
+COPY . .
+
+# Exponemos el puerto de Vite
+EXPOSE 5173
+
+# Ejecutamos en modo desarrollo y forzamos host
+CMD ["npm", "run", "dev", "--", "--host", "0.0.0.0"]
